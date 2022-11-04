@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+
+//allow users to sign up for an account
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then(
         (hash) => {
@@ -26,7 +28,9 @@ exports.signup = (req, res, next) => {
     );
 };
 
-//find user with valid email, if not the user, throw an error. if user exists, compare the entered pw with hash in database. If not valid, throw error- else, send back user id and token
+//find user with valid email, if not the user, throw an error. 
+//if user exists, compare the entered pw with hash in database. 
+//If not valid, throw error- else, send back user id and token
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email }).then(
         (user) => {

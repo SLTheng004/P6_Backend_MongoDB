@@ -1,6 +1,7 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
+//displays all sauces available
 exports.getAllSauces = (req, res, next) => {
     Sauce.find().then(
         (sauces) => {
@@ -15,6 +16,7 @@ exports.getAllSauces = (req, res, next) => {
     );
 };
 
+//creates sauce for user
 exports.createSauce = (req, res, next) => {
 
     const url = req.protocol + '://' + req.get('host');
@@ -43,6 +45,7 @@ exports.createSauce = (req, res, next) => {
         });
 };
 
+//allows user to pull up specific sauce
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id }).then(
         (sauce) => {
@@ -57,6 +60,7 @@ exports.getOneSauce = (req, res, next) => {
     );
 };
 
+//allows user to modify sauce information, as long as user id matches
 exports.modifySauce = (req, res, next) => {
     let sauce = new Sauce({ _id: req.params._id });
     if (req.file) {
@@ -103,6 +107,7 @@ exports.modifySauce = (req, res, next) => {
     );
 };
 
+//allows user to delete sauce and removes file, as long as user id matches
 exports.deleteOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {
@@ -127,6 +132,7 @@ exports.deleteOneSauce = (req, res, next) => {
       .catch((error) => res.status(500).json({ error }));
   };
 
+//user can like or dislike sauce, but can only opt for one option
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
@@ -139,7 +145,7 @@ exports.likeSauce = (req, res, next) => {
             $push: { usersLiked: req.body.userId },
           }
         )
-          .then(() => res.status(201).json({ message: "The sauce was liked" }))
+          .then(() => res.status(201).json({ message: "The sauce was liked!" }))
           .catch((error) => res.status(404).json({ error }));
       }
 
@@ -152,7 +158,7 @@ exports.likeSauce = (req, res, next) => {
             $pull: { usersLiked: req.body.userId },
           }
         )
-          .then(() => res.status(201).json({ message: "The sauce was liked" }))
+          .then(() => res.status(201).json({ message: "The sauce was unliked!" }))
           .catch((error) => res.status(404).json({ error }));
       }
 

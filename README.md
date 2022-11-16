@@ -1,5 +1,9 @@
 # HotTakes
 
+In this project, I built a secure API using MongoDB NoSQL, Node JS, Express framework, while using OWASP and GDPR best practices. 
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
 
 ## Development server
